@@ -1,17 +1,23 @@
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Booking
 {
-    private static boolean availability(Room room, LocalDate start, LocalDate end)
+    private static boolean availability(@NotNull Room room, LocalDate start, LocalDate end)
     {
         return room.stays == null || room.stays.parallelStream()
                 .allMatch(stay -> !end.isAfter(stay.start())
                         || !start.isBefore(stay.end()));
     }
 
-    public static ArrayList<Room> getAvailableRooms(LocalDate start, LocalDate end, ArrayList<Room> rooms, Integer capacity)
+    public static ArrayList<Room> getAvailableRooms(LocalDate start, LocalDate end, @NotNull ArrayList<Room> rooms, Integer capacity)
     {
         return rooms.parallelStream()
                 .filter(room -> Objects.equals(room.capacity, capacity))
@@ -19,6 +25,7 @@ public class Booking
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Nullable
     public static Room getCheapestRoom(LocalDate start, LocalDate end, ArrayList<Room> rooms, Integer capacity)
     {
         ArrayList<Room> availableRooms = getAvailableRooms(start, end, rooms, capacity);
