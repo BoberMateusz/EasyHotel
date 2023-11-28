@@ -3,27 +3,7 @@ import java.util.HashSet;
 
 public class Room
 {
-    static class Stay
-    {
-        public Stay(LocalDate start, LocalDate end)
-        {
-            this.start = start;
-            this.end = end;
-        }
-
-        private final LocalDate start;
-        private final LocalDate end;
-
-        public LocalDate getStart()
-        {
-            return start;
-        }
-
-        public LocalDate getEnd()
-        {
-            return end;
-        }
-    }
+    record Stay(LocalDate start, LocalDate end) { }
 
         Integer id;
         Integer capacity;

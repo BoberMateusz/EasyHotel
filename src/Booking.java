@@ -7,8 +7,8 @@ public class Booking
     private static boolean availability(Room room, LocalDate start, LocalDate end)
     {
         return room.stays == null || room.stays.parallelStream()
-                .allMatch(stay -> !end.isAfter(stay.getStart())
-                        || !start.isBefore(stay.getEnd()));
+                .allMatch(stay -> !end.isAfter(stay.start())
+                        || !start.isBefore(stay.end()));
     }
 
     public static ArrayList<Room> getAvailableRooms(LocalDate start, LocalDate end, ArrayList<Room> rooms, Integer capacity)
