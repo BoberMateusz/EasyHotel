@@ -6,13 +6,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Main
 {
-    //ThreadLocalRandom.current().nextInt(2, 6)
     public static ArrayList<Room> createRooms(int amount)
     {
         ArrayList<Room> rooms = new ArrayList<>();
         for(int i=1; i<=amount; i++)
         {
-            rooms.add(new Room(i, 2, BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(200, 500))
+            rooms.add(new Room(i, ThreadLocalRandom.current().nextInt(1, 5), BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(100, 500))
                     .setScale(2, RoundingMode.HALF_UP).doubleValue()));
         }
         return rooms;
@@ -20,16 +19,16 @@ public class Main
 
     public static void main(String[] args)
     {
-        ArrayList<Room> rooms = createRooms(5);
+        ArrayList<Room> rooms = createRooms(100);
         System.out.println(rooms);
+        System.out.println();
 
-        LocalDate start1 = LocalDate.of(2024, 10, 11);
-        LocalDate end1 = LocalDate.of(2024, 10, 13);
-        LocalDate start2 = LocalDate.of(2024, 10, 14);
-        LocalDate end2 = LocalDate.of(2024, 10, 16);
-
-        System.out.println(Booking.getCheapestRoom(start1, end1, rooms, 2));
-
-
+        for(int i=0; i<1000; i++)
+        {
+            LocalDate date = LocalDate.ofYearDay(2024, ThreadLocalRandom.current().nextInt(1, 359)); //366(leap year) - 7 days stay
+            Booking.quickBook(date, date.plusDays(7), 2, rooms);
+        }
     }
+
+
 }
