@@ -14,7 +14,7 @@ public class Booking
     {
         return room.stays == null || room.stays.parallelStream()
                 .allMatch(stay -> !end.isAfter(stay.start())
-                        || !start.isBefore(stay.end()));
+                        ^ !start.isBefore(stay.end()));
     }
 
     public static ArrayList<Room> getAvailableRooms(LocalDate start, LocalDate end, @NotNull ArrayList<Room> rooms, Integer capacity)
