@@ -3,7 +3,13 @@ import java.util.HashSet;
 
 public class Room
 {
-    record Stay(LocalDate start, LocalDate end) { }
+    record Stay(LocalDate start, LocalDate end) {
+        @Override
+        public String toString()
+        {
+            return start + " - " + end + " | ";
+        }
+    }
 
         Integer id;
         Integer capacity;
