@@ -1,12 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -57,70 +54,20 @@ public class Main
         return rooms;
     }
 
-    public static void writeBookingReport(String name, ArrayList<Room> rooms)
-    {
-        try //creating a file
-        {
-            File report = new File(name);
-            if(report.createNewFile()) {
-                System.out.println("File " + report.getName() + " has been created");
-            }
-            else
-            {
-                System.out.println("File already exists");
-            }
-        }
-        catch (IOException e)
-        {
-            System.out.println("Error in creating a file");
-            e.getCause();
-        }
-
-
-        try(FileWriter writer = new FileWriter(name)) //writing down everything
-        {
-            StringBuilder roomAndStays = new StringBuilder();
-
-            rooms.stream()
-                    .sorted(Comparator.comparing(r -> r.id))
-                    .forEach(r ->
-                    {
-                        roomAndStays.append("Room number: ").append(r.id).append("  Stays: ");
-                        r.stays.stream()
-                                .sorted(Comparator.comparing(Room.Stay::start))
-                                .forEach(s -> roomAndStays.append(s.start()).append("-").append(s.end()));
-
-                        try
-                        {
-                            writer.write(String.valueOf(roomAndStays));
-                        } catch (IOException e)
-                        {
-                            throw new RuntimeException(e);
-                        }
-
-                        roomAndStays.setLength(0);
-                    });
-
-        } catch (IOException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        ArrayList<Room> rooms = createRooms("data.csv");
+        ArrayList<Room> rooms = createRooms(100); //overloaded method - can randomly create rooms or from a txt file
         System.out.println(rooms);
         System.out.println();
 
-        for(int i=0; i<100; i++)
+        for(int i=0; i<1000; i++)
         {
             LocalDate date = LocalDate.ofYearDay(2024, ThreadLocalRandom.current().nextInt(1, 359)); //366(leap year) - 7 days stay
             Booking.quickBook(date, date.plusDays(7), 2, rooms);
         }
 
-        writeBookingReport("Report1", rooms);
+        FileHandling.writeBookingReport("Report1", rooms);
     }
 
 
