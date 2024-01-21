@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 
@@ -13,10 +14,10 @@ public class Room
 
         Integer id;
         Integer capacity;
-        Double pricePN;
+        BigDecimal pricePN;
         HashSet<Stay> stays;
 
-    public Room(Integer id, Integer capacity, Double pricePN)
+    public Room(Integer id, Integer capacity, BigDecimal pricePN)
     {
         this.id = id;
         this.capacity = capacity;
