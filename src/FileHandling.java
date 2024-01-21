@@ -2,7 +2,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
 
 public class FileHandling
@@ -28,7 +27,7 @@ public class FileHandling
     }
 
 
-    public static void writeBookingReport(String name, ArrayList<Room> rooms)
+    public static void writeBookingReport(String name)
     {
         createFile(name);
 
@@ -37,7 +36,7 @@ public class FileHandling
             BufferedWriter writer = new BufferedWriter(fileWriter);
             StringBuilder roomAndStays = new StringBuilder();
 
-            rooms.stream()
+            Booking.getRooms().stream()
                     .sorted(Comparator.comparing(r -> r.id))
                     .forEach(r ->
                     {
