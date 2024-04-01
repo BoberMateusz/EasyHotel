@@ -1,11 +1,23 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Scanner;
 
 public class FileHandling
 {
+    public static ArrayList<String> getDatabaseInfo() throws FileNotFoundException
+    {
+        File file = new File("src/databeseInfo.txt");
+        Scanner reader = new Scanner(file);
+        ArrayList<String> info = new ArrayList<>();
+        while (reader.hasNextLine())
+        {
+            info.add(reader.nextLine());
+        }
+        reader.close();
+        return info;
+    }
+
     public static void createFile(String name)
     {
         try //creating a file

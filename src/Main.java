@@ -1,20 +1,32 @@
-import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main
 {
-    public static void main(String[] args) throws FileNotFoundException
+    public static void main(String[] args) throws SQLException
     {
 
-        //Reception.createRooms(100); //overloaded method - can randomly create rooms or from a txt file
-        Reception.createRooms("data.csv"); //overloaded method - can randomly create rooms or from a txt file
+        var roomDao = new RoomDAO();
 
-        System.out.println();
+        roomDao.printRooms();
 
-        for(int i=0; i<10000; i++)
+        List<Room> rooms=new ArrayList<>();
+
+
+        for (int i = 104; i < 220; i++)
         {
-            Booking.bookRandom();
+            var room=new Room(i,1+i%2, BigDecimal.valueOf(1+i%2));
+            rooms.add(room);
         }
 
-        FileHandling.writeBookingReport("Report1");
+        roomDao.createNewRooms(rooms);
     }
+
+
+
+
+
+
 }
