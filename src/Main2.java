@@ -34,7 +34,7 @@ public class Main2
         {
                 for (int i = 0; i < 100; i++)
                 {
-                    Booking.bookRandom();
+                    RoomsUTIL.bookRandom();
                 }
                 Thread.currentThread().interrupt();
         }

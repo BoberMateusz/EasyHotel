@@ -21,7 +21,7 @@ public class Main
             rooms.add(room);
         }
 
-        roomDao.createNewRooms(rooms);
+        roomDao.insertNewRooms(rooms);
     }
 
 

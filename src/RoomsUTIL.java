@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-public class Booking
+public class RoomsUTIL
 {
     private static List<Room> rooms;
 
@@ -62,13 +62,13 @@ public class Booking
     {
         LocalDate date = LocalDate.ofYearDay(2024, ThreadLocalRandom.current().nextInt(1, 359)); //366(leap year) - 7 days stay
 
-        Booking.quickBook(date, date.plusDays(ThreadLocalRandom.current().nextInt(1, 14)), ThreadLocalRandom.current().nextInt(1, 5));
+        RoomsUTIL.quickBook(date, date.plusDays(ThreadLocalRandom.current().nextInt(1, 14)), ThreadLocalRandom.current().nextInt(1, 5));
     }
 
 
     public static void setRooms(List<Room> rooms)
     {
-        Booking.rooms = rooms;
+        RoomsUTIL.rooms = rooms;
     }
 
     public static List<Room> getRooms()

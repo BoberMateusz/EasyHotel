@@ -9,11 +9,11 @@ import java.util.List;
 public class RoomDAO
 {
 
-    public static final String ROOM_ID = "room_id";
-    public static final String ROOM_CAPACITY = "room_capacity";
-    public static final String ROOM_PRICE = "room_price";
-    public static final String SELECT_ALL_ROOMS_QUERY = "SELECT %s, %s, %s  FROM rooms".formatted(ROOM_ID, ROOM_CAPACITY, ROOM_PRICE);
-    public static final String INSERT_INTO_ROOMS_VALUES = "INSERT INTO rooms VALUES (?, ?, ?)";
+    private static final String ROOM_ID = "room_id";
+    private static final String ROOM_CAPACITY = "room_capacity";
+    private static final String ROOM_PRICE = "room_price";
+    private static final String SELECT_ALL_ROOMS_QUERY = "SELECT %s, %s, %s  FROM rooms".formatted(ROOM_ID, ROOM_CAPACITY, ROOM_PRICE);
+    private static final String INSERT_INTO_ROOMS_VALUES = "INSERT INTO rooms VALUES (?, ?, ?)";
 
     private Connection createConnection() throws SQLException, FileNotFoundException
     {
@@ -23,7 +23,7 @@ public class RoomDAO
                 info.get(0), info.get(1), info.get(2));
     }
 
-    public void createNewRooms(List<Room> rooms)
+    public void insertNewRooms(List<Room> rooms)
     {
         try (Connection conn = createConnection())
         {
@@ -42,24 +42,22 @@ public class RoomDAO
         }
     }
 
-    public void printRooms()
+    public ArrayList<Room> getAllRooms()
     {
+        ArrayList<Room> rooms = new ArrayList<>();
         try (Connection connection = createConnection())
         {
-            var res=connection.createStatement().executeQuery(SELECT_ALL_ROOMS_QUERY);
-            while (res.next())
+            var resultSet=connection.createStatement().executeQuery(SELECT_ALL_ROOMS_QUERY);
+            while (resultSet.next())
             {
-               System.out.println(res.getString(ROOM_ID) + " " + res.getString(ROOM_CAPACITY)+ " " + res.getString(ROOM_PRICE));
+               rooms.add(new Room(resultSet.getInt(ROOM_ID), resultSet.getInt(ROOM_CAPACITY), resultSet.getBigDecimal(ROOM_PRICE)));
             }
         }
         catch (Exception e) {
             System.err.println(e);
-
         }
-
-
-//
-//            return connection;
+        return rooms;
+        //add sorting
     }
 
 }

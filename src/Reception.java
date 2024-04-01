@@ -18,7 +18,7 @@ public class Reception
             rooms.add(new Room(i, ThreadLocalRandom.current().nextInt(1, 5),
                     BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(100, 500)).setScale(2, RoundingMode.HALF_UP)));
         }
-        Booking.setRooms(rooms);
+        RoomsUTIL.setRooms(rooms);
     }
 
     public static void createRooms(String fileName) throws FileNotFoundException
@@ -53,7 +53,7 @@ public class Reception
 
             }
         }
-        Booking.setRooms(rooms);
+        RoomsUTIL.setRooms(rooms);
     }
 
 

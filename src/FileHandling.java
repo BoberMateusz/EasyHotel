@@ -48,7 +48,7 @@ public class FileHandling
             BufferedWriter writer = new BufferedWriter(fileWriter);
             StringBuilder roomAndStays = new StringBuilder();
 
-            Booking.getRooms().stream()
+            RoomsUTIL.getRooms().stream()
                     .sorted(Comparator.comparing(r -> r.id))
                     .forEach(r ->
                     {
