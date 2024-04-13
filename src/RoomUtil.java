@@ -3,13 +3,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-public class RoomsUTIL
+public class RoomUtil
 {
-    private static List<Room> rooms;
-
     public static boolean availability(@NotNull Room room, LocalDate start, LocalDate end)
     {
         return room.stays == null || room.stays.parallelStream()
@@ -17,7 +14,7 @@ public class RoomsUTIL
                         ^ !start.isBefore(stay.end()));
     }
 
-    public static ArrayList<Room> getAvailableRooms(LocalDate start, LocalDate end, Integer capacity)
+    public static ArrayList<Room> getAvailableRooms(LocalDate start, LocalDate end, Integer capacity, List<Room> rooms)
     {
         return rooms.parallelStream()
                 .filter(room -> Objects.equals(room.capacity, capacity))
@@ -26,9 +23,9 @@ public class RoomsUTIL
     }
 
     @Nullable
-    public static Room getCheapestRoom(LocalDate start, LocalDate end, Integer capacity)
+    public static Room getCheapestRoom(LocalDate start, LocalDate end, Integer capacity, List<Room> rooms)
     {
-        List<Room> availableRooms = getAvailableRooms(start, end, capacity);
+        List<Room> availableRooms = getAvailableRooms(start, end, capacity, rooms);
         if(!availableRooms.isEmpty())
             return Collections.min(availableRooms, Comparator.comparing(room -> room.pricePN));
         else
@@ -51,28 +48,16 @@ public class RoomsUTIL
         }
     }
 
-    public static void quickBook(LocalDate start, LocalDate end, Integer capacity)
+    public static Boolean quickBook(LocalDate start, LocalDate end, Integer capacity, List<Room> rooms)
     {
-        Room foundRoom = getCheapestRoom(start, end, capacity);
+        Room foundRoom = getCheapestRoom(start, end, capacity, rooms);
         if(foundRoom!=null)
+        {
             bookRoom(foundRoom, start, end);
-    }
-
-    public static void bookRandom()
-    {
-        LocalDate date = LocalDate.ofYearDay(2024, ThreadLocalRandom.current().nextInt(1, 359)); //366(leap year) - 7 days stay
-
-        RoomsUTIL.quickBook(date, date.plusDays(ThreadLocalRandom.current().nextInt(1, 14)), ThreadLocalRandom.current().nextInt(1, 5));
+            return true;
+        }
+            return false;
     }
 
 
-    public static void setRooms(List<Room> rooms)
-    {
-        RoomsUTIL.rooms = rooms;
-    }
-
-    public static List<Room> getRooms()
-    {
-        return rooms;
-    }
 }

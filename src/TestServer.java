@@ -1,8 +1,6 @@
-import java.sql.SQLException;
-
-public class Main
+public class TestServer
 {
-    public static void main(String[] args) throws SQLException
+    public static void main(String[] args)
     {
         HotelServer hotelServer = new HotelServer();
         Thread serverThread = new Thread(hotelServer);
