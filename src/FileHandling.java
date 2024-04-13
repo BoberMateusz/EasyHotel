@@ -7,7 +7,7 @@ public class FileHandling
 {
     public static ArrayList<String> getDatabaseInfo() throws FileNotFoundException
     {
-        File file = new File("src/databeseInfo.txt");
+        File file = new File("src/databaseInfo.txt");
         Scanner reader = new Scanner(file);
         ArrayList<String> info = new ArrayList<>();
         while (reader.hasNextLine())

@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Reception
 {
-    public static void createRooms(int amount)
+    public static List<Room> createRooms(int amount)
     {
         List<Room> rooms = Collections.synchronizedList(new ArrayList<>());
         for(int i=1; i<=amount; i++)
@@ -18,7 +18,7 @@ public class Reception
             rooms.add(new Room(i, ThreadLocalRandom.current().nextInt(1, 5),
                     BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(100, 500)).setScale(2, RoundingMode.HALF_UP)));
         }
-        RoomsUTIL.setRooms(rooms);
+        return rooms;
     }
 
     public static void createRooms(String fileName) throws FileNotFoundException
